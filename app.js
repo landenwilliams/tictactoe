@@ -1,6 +1,9 @@
 //dom selectors & various variables
-
+const playerOneInput = document.getElementById('player-one-name');
+const playerTwoInput = document.getElementById('player-two-name');
+const playerNamesButtons = document.getElementsByClassName('name-buttons');
 const board = document.getElementById('board');
+const playerNamesContainer = document.getElementById('playerNames');
 const playerText = document.getElementById ('player');
 const restartButton = document.getElementById('restartbutton');
 const winConditions = [
@@ -14,6 +17,8 @@ const winConditions = [
   [2,4,6]
 ]
 const gameState = {
+    playerOne: "",
+    playerTwo: "",
     players: ['X', 'O'],
     board: ["", "", "", "", "", "", "", "", ""],
   }
@@ -25,6 +30,45 @@ let spaces = gameState.board.map(i => i);
 
 
 //helper functions
+
+const playerNameFunction = (container) => {
+
+  for(let i = 0; i < playerNamesButtons.length; i++) {
+    playerNamesButtons[i].addEventListener('click', (event) => {
+
+        const playerOneDisplay = document.createElement('h3');
+        const playerTwoDisplay = document.createElement('h3');
+         
+        console.log(playerOneDisplay);
+        console.log(playerTwoDisplay);
+        
+        const isPlayer1 = event.target.innerText.includes('1');
+
+        if(isPlayer1) {
+            gameState.playerOne = playerOneInput.value;
+            // console.log(gameState.playerOne);
+            playerOneDisplay.innerText = `Player One is: ${playerOneInput.value}`;
+            // console.log(playerOneDisplay.innerText)
+            container.appendChild(playerOneDisplay);
+            playerOneInput.value = '';
+            playerOneInput.hidden = true;
+            
+        } else {
+            gameState.playerTwo= playerTwoInput.value;
+            console.log(gameState.playerTwo);
+            playerTwoDisplay.innerText = `Player Two is: ${playerTwoInput.value}`;
+
+            container.appendChild(playerTwoDisplay);
+            playerTwoDisplay.value = '';
+            playerTwoInput.hidden = true;
+
+        }
+        event.target.style.visibility = 'hidden';
+        
+    })
+}
+
+}
 
 const switchPlayer = () => {
   
@@ -98,12 +142,14 @@ const restartGame = (box) => {
   currentPlayer = playerOne;
   spaces = ["", "", "", "", "", "", "", "", ""];
   playerText.innerText = `Player: ${currentPlayer}`; 
+  playerOneInput.hidden = false;
 
 };
 
 
 // render game
-
+playerNameFunction(playerNamesContainer);
 createGameboard();
+console.log(gameState.playerOne);
 
 

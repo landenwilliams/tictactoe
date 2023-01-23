@@ -50,7 +50,7 @@ h1 {
 .box:nth-child(6) ~ .box {
     border-bottom: none;
 } 
-button {
+#restartbutton {
     padding: 10px 20px;
     border-radius: 10px;
     background-color: lightpink;
@@ -60,7 +60,7 @@ button {
     transition: 200ms transform;
     font-weight: 600;
 }
-button:hover {
+#restartbutton:hover {
     cursor: pointer;
     transform: translateY(-2px);
 }

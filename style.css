@@ -4,13 +4,11 @@
     box-sizing: border-box;
 }
 
-:root {
-    --winning-blocks: #2d414b;
+body {
+    color: #333;
+    background-color: lightskyblue;
 }
 
-body {
-    color: ;
-}
 h1 {
     font-size: 54px;
     text-transform: uppercase;
@@ -42,6 +40,9 @@ h1 {
     font-size: 120px;
     border-right: 2px solid;
     border-bottom: 2px solid;
+}
+.box:hover {
+    cursor: pointer;
 }
 .box:nth-child(3n) {
     border-right: none;

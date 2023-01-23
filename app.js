@@ -37,10 +37,12 @@ const playerNameFunction = (container) => {
     playerNamesButtons[i].addEventListener('click', (event) => {
 
         const playerOneDisplay = document.createElement('h3');
+        
         const playerTwoDisplay = document.createElement('h3');
+        
          
-        console.log(playerOneDisplay);
-        console.log(playerTwoDisplay);
+        // console.log(playerOneDisplay);
+        // console.log(playerTwoDisplay);
         
         const isPlayer1 = event.target.innerText.includes('1');
 
@@ -52,6 +54,7 @@ const playerNameFunction = (container) => {
             container.appendChild(playerOneDisplay);
             playerOneInput.value = '';
             playerOneInput.hidden = true;
+            playerNamesButtons[0].style.visibility = 'hidden';
             
         } else {
             gameState.playerTwo= playerTwoInput.value;
@@ -61,9 +64,17 @@ const playerNameFunction = (container) => {
             container.appendChild(playerTwoDisplay);
             playerTwoDisplay.value = '';
             playerTwoInput.hidden = true;
+            playerNamesButtons[1].style.visibility = 'hidden';
 
         }
-        event.target.style.visibility = 'hidden';
+        
+        if (playerTwoInput.value == "") {
+          gameState.playerTwo = `Computer`;
+          console.log(gameState.playerTwo);
+          playerTwoDisplay.innerText = `Player Two is: ${gameState.playerTwo}`;
+
+        }
+        
         
     })
 }
@@ -92,7 +103,7 @@ const createSpace = (i) => {
     })
  
   restartButton.addEventListener('click', () => {
-    restartGame(box);
+    restartGame(box, playerNamesContainer);
   });
 };
 
@@ -138,11 +149,17 @@ const checkWinner =() => {
 }
 
 const restartGame = (box) => {
+
   box.innerText = "";
   currentPlayer = playerOne;
   spaces = ["", "", "", "", "", "", "", "", ""];
   playerText.innerText = `Player: ${currentPlayer}`; 
   playerOneInput.hidden = false;
+  playerTwoInput.hidden = false;
+  playerNamesButtons[0].style.visibility = 'visible';
+  playerNamesButtons[1].style.visibility = 'visible';
+  
+
 
 };
 

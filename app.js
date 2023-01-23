@@ -38,21 +38,12 @@ const playerNameFunction = (container) => {
         const container = document.getElementById('playerNames');
         const playerOneDisplay = document.createElement('h3');
         const playerTwoDisplay = document.createElement('h3');
-        playerOneDisplay.id = "playerOneDisplay";
-        playerTwoDisplay.id = "playerTwoDisplay";
-        playerTwoDisplay.class = "nameDisplay";
-        playerTwoDisplay.class = "nameDisplay";
-         
-        // console.log(playerOneDisplay);
-        // console.log(playerTwoDisplay);
         
         const isPlayer1 = event.target.innerText.includes('1');
 
         if(isPlayer1) {
             gameState.playerOne = playerOneInput.value;
-            // console.log(gameState.playerOne);
             playerOneDisplay.innerText = `Player One is: ${playerOneInput.value}`;
-            // console.log(playerOneDisplay.innerText)
             container.appendChild(playerOneDisplay);
             playerOneInput.value = '';
             playerOneInput.hidden = true;
@@ -60,7 +51,6 @@ const playerNameFunction = (container) => {
             
         } else {
             gameState.playerTwo= playerTwoInput.value;
-            // console.log(gameState.playerTwo);
             playerTwoDisplay.innerText = `Player Two is: ${playerTwoInput.value}`;
 
             container.appendChild(playerTwoDisplay);
@@ -72,7 +62,6 @@ const playerNameFunction = (container) => {
         
         if (playerTwoInput.value == "") {
           gameState.playerTwo = `Computer`;
-          // console.log(gameState.playerTwo);
           playerTwoDisplay.innerText = `Player Two is: ${gameState.playerTwo}`;
 
         }
@@ -106,6 +95,7 @@ const createSpace = (i) => {
  
   restartButton.addEventListener('click', () => {
     restartGame(box, playerNamesContainer);
+    
   });
 };
 
@@ -151,23 +141,20 @@ const checkWinner =() => {
 }
 
 const restartGame = (box) => {
-  const playerOneDisplay = document.getElementById('playerOneDisplay');
-  // console.log(playerOneDisplay);
-  playerOneDisplay.innerText = "";
-  const playerTwoDisplay = document.getElementById('playerTwoDisplay');
-  // console.log(playerTwoDisplay);
-  playerTwoDisplay.innerText = "";
   box.innerText = "";
   currentPlayer = playerOne;
   gameState.playerOne= "";
   gameState.playerTwo="";
-  console.log(gameState.playerTwo);
   spaces = ["", "", "", "", "", "", "", "", ""];
   playerText.innerText = `Player: ${currentPlayer}`; 
   playerOneInput.hidden = false;
   playerTwoInput.hidden = false;
   playerNamesButtons[0].style.visibility = 'visible';
   playerNamesButtons[1].style.visibility = 'visible';
+  const playerDisplay = document.getElementById('playerNames');
+  playerDisplay.innerHTML = ``;
+ 
+  
   
 
 

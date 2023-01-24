@@ -21,6 +21,7 @@ const gameState = {
     playerTwo: "",
     players: ['X', 'O'],
     board: ["", "", "", "", "", "", "", "", ""],
+    
   }
 let players = gameState.players.map(i => i);
 let playerOne = players[0];
@@ -38,7 +39,6 @@ const playerNameFunction = (container) => {
         const container = document.getElementById('playerNames');
         const playerOneDisplay = document.createElement('h3');
         const playerTwoDisplay = document.createElement('h3');
-        
         const isPlayer1 = event.target.innerText.includes('1');
 
         if(isPlayer1) {
@@ -52,20 +52,22 @@ const playerNameFunction = (container) => {
         } else {
             gameState.playerTwo= playerTwoInput.value;
             playerTwoDisplay.innerText = `Player Two is: ${playerTwoInput.value}`;
-
             container.appendChild(playerTwoDisplay);
             playerTwoDisplay.value = '';
             playerTwoInput.hidden = true;
             playerNamesButtons[1].style.visibility = 'hidden';
 
         }
-        
+
         if (playerTwoInput.value == "") {
           gameState.playerTwo = `Computer`;
           playerTwoDisplay.innerText = `Player Two is: ${gameState.playerTwo}`;
+         
 
         }
-        
+     
+
+     
         
     })
 }
@@ -81,6 +83,8 @@ const switchPlayer = () => {
     currentPlayer = playerOne;
   };
   playerText.innerText = `Player: ${currentPlayer}`;
+
+  
 }
 
 const createSpace = (i) => {
@@ -91,6 +95,7 @@ const createSpace = (i) => {
   board.appendChild(box);
   box.addEventListener('click', (event) => {
       clickFunction(currentPlayer, box);
+
     })
  
   restartButton.addEventListener('click', () => {
@@ -102,8 +107,12 @@ const createSpace = (i) => {
 const clickFunction = (currentPlayer, box) => {
   box.innerText = `${currentPlayer}`;
   spaces[box.id] = currentPlayer;
+  if(gameState.playerTwo == "Computer"){
+    autoPlayer()};
+
+  
   checkWinner();
-}
+  }
 
 
 const createGameboard = () => {
@@ -136,9 +145,31 @@ const checkWinner =() => {
   } else if(!spaces.includes("")){
     playerText.innerText = `Draw!`;
   } else{
+   
     switchPlayer();
   }
-}
+};
+
+const autoPlayer = () => {
+  
+  const box = document.getElementsByClassName("box");
+  let randomAnswer = Math.floor(Math.random()*box.length);
+  let randomBox = document.getElementById(randomAnswer);
+  console.log(randomAnswer);
+
+  
+  if (randomBox.innerText !== "X" && randomBox.innerText !== "O"){
+    switchPlayer();
+    spaces[randomAnswer] = currentPlayer;
+    randomBox.innerText = `${currentPlayer}`;
+
+    
+  } else {
+    autoPlayer();
+  }
+  
+};
+
 
 const restartGame = (box) => {
   box.innerText = "";
@@ -164,6 +195,6 @@ const restartGame = (box) => {
 // render game
 playerNameFunction(playerNamesContainer);
 createGameboard();
-console.log(gameState.playerOne);
+
 
 

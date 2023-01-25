@@ -6,6 +6,7 @@ const board = document.getElementById('board');
 const playerNamesContainer = document.getElementById('playerNames');
 const playerText = document.getElementById ('player');
 const restartButton = document.getElementById('restartbutton');
+
 const winConditions = [
   [0,1,2],
   [3,4,5],
@@ -28,6 +29,7 @@ let playerOne = players[0];
 let playerTwo = players[1];
 let currentPlayer = playerOne;
 let spaces = gameState.board.map(i => i);
+let roundWon = false;
 
 
 //helper functions
@@ -48,34 +50,26 @@ const playerNameFunction = (container) => {
             playerOneInput.value = '';
             playerOneInput.hidden = true;
             playerNamesButtons[0].style.visibility = 'hidden';
-            
+    
         } else {
             gameState.playerTwo= playerTwoInput.value;
             playerTwoDisplay.innerText = `Player Two is: ${playerTwoInput.value}`;
             container.appendChild(playerTwoDisplay);
             playerTwoDisplay.value = '';
             playerTwoInput.hidden = true;
-            playerNamesButtons[1].style.visibility = 'hidden';
-
+            playerNamesButtons[1].style.visibility = 'hidden'
         }
 
         if (playerTwoInput.value == "") {
           gameState.playerTwo = `Computer`;
           playerTwoDisplay.innerText = `Player Two is: ${gameState.playerTwo}`;
-         
-
         }
-     
-
-     
-        
-    })
-}
-
+    });  
+  }
 }
 
 const switchPlayer = () => {
-  
+
   if(currentPlayer == playerOne){
     currentPlayer = playerTwo;
   }
@@ -84,7 +78,7 @@ const switchPlayer = () => {
   };
   playerText.innerText = `Player: ${currentPlayer}`;
 
-  
+
 }
 
 const createSpace = (i) => {
@@ -105,15 +99,18 @@ const createSpace = (i) => {
 };
 
 const clickFunction = (currentPlayer, box) => {
+  if(box.innerText === ""){
   box.innerText = `${currentPlayer}`;
   spaces[box.id] = currentPlayer;
-  if(gameState.playerTwo == "Computer"){
-    autoPlayer()};
-
   
-  checkWinner();
+  if(gameState.playerTwo === "Computer"){
+    autoPlayer();
   }
-
+    
+  checkWinner();
+  
+  } 
+}
 
 const createGameboard = () => {
   for (let i = 0; i <= 8; i++) {
@@ -145,31 +142,56 @@ const checkWinner =() => {
   } else if(!spaces.includes("")){
     playerText.innerText = `Draw!`;
   } else{
-   
     switchPlayer();
   }
+};
+
+const checkWinnerForAuto =() => {
+  
+  for(let i = 0; i < winConditions.length; i++){
+
+      const condition = winConditions[i];
+      const spaceA = spaces[condition[0]];
+      const spaceB = spaces[condition[1]];
+      const spaceC = spaces[condition[2]];
+
+      if(spaceA == "" || spaceB == "" || spaceC == ""){
+          continue;
+      }
+      if(spaceA == spaceB && spaceB == spaceC){
+          roundWon = true;
+          break;
+      }
+  }
+
+  if(roundWon){
+    playerText.innerText = `${currentPlayer} wins!`;
+  } else if(!spaces.includes("")){
+    playerText.innerText = `Draw!`;
+  } 
+  
 };
 
 const autoPlayer = () => {
-  
   const box = document.getElementsByClassName("box");
+  checkWinnerForAuto();
   let randomAnswer = Math.floor(Math.random()*box.length);
   let randomBox = document.getElementById(randomAnswer);
-  console.log(randomAnswer);
+  if (!roundWon) {
+    if (randomBox.innerText === ""){
+      switchPlayer();
+      spaces[randomAnswer] = currentPlayer;
+      randomBox.innerText = `${currentPlayer}`;
 
-  
-  if (randomBox.innerText !== "X" && randomBox.innerText !== "O"){
-    switchPlayer();
-    spaces[randomAnswer] = currentPlayer;
-    randomBox.innerText = `${currentPlayer}`;
-
-    
+      
+    } else {
+      autoPlayer();
+    }
   } else {
-    autoPlayer();
+    return;
   }
   
 };
-
 
 const restartGame = (box) => {
   box.innerText = "";
@@ -184,13 +206,8 @@ const restartGame = (box) => {
   playerNamesButtons[1].style.visibility = 'visible';
   const playerDisplay = document.getElementById('playerNames');
   playerDisplay.innerHTML = ``;
- 
-  
-  
-
-
+  roundWon = false;
 };
-
 
 // render game
 playerNameFunction(playerNamesContainer);

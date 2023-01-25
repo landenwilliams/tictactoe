@@ -5,7 +5,7 @@
 }
 
 body {
-    margin-top: 100px;
+    margin-top: 0px;
     color: #333;
     background-color: lightskyblue;
 }
@@ -26,14 +26,14 @@ h1 {
 }
 
 #board {
-    width: 600px;
+    width: 300px;
     display: flex;
     flex-wrap: wrap;
     margin-top: 40px;
 }
 .box {
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,6 +52,7 @@ h1 {
     border-bottom: none;
 } 
 #restartbutton {
+    
     padding: 10px 20px;
     border-radius: 10px;
     background-color: lightpink;
@@ -64,4 +65,32 @@ h1 {
 #restartbutton:hover {
     cursor: pointer;
     transform: translateY(-2px);
+}
+
+.name-buttons {
+
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: lightpink;
+    color: #333;
+    border-color: pink;
+    font-size: 18px;
+    transition: 200ms transform;
+    font-weight: 600;
+}
+
+#name-button2 {
+    margin-bottom: 5px;
+}
+
+.inputs {
+    color:red;
+    font-family: Arial, Helvetica, sans-serif;
+    
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 0px;
+    text-align: center;
+    border-radius: 10px;
+    height: 25px;
 }
